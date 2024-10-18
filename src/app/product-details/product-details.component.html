@@ -1,0 +1,21 @@
+<div class="product">
+    <div class="product-details">
+        <!-- question mark could be used for safety that if we had null values in in list it would skip it without error -->
+        <!-- profuct?.imageName -->
+        <img src="{{ 'assets/images/robot-parts/' + product.imageName }}" [alt]="product.name" />
+        <div class="product-info">
+            <div class="name">{{ product.name }}</div>
+            <div class="description">{{ product.description}}</div>
+            <div class="category">Part Type: {{ product.category }}</div>
+        </div>
+    </div>
+    <div class="price">
+        <div [ngClass]="discountedStyle(product)">
+            {{ product.price | currency: 'EUR' }}
+        </div>
+        <div class="discount" *ngIf="product.discount > 0">
+            {{ product.price*(1-product.discount) | currency: 'EUR' }}
+        </div>
+        <button class="cta" (click)="buyBtnClicked()">Buy</button>
+    </div>
+</div>
