@@ -13,6 +13,6 @@ export class ProductService {
   getProducts(): Observable<IProduct[]> {
     // to remove host information we made proxy.conf.json file in src and added it to
     // angular.json in development section
-    return this.http.get<IProduct[]>('api/products');
+    return this.http.get<IProduct[]>('api/products')
   }
 }

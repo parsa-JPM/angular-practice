@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product.model';
-import { CartService } from '../cart.service';
 import { ProductService } from './product.service';
+import { CartService } from '../cart/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
@@ -16,7 +17,8 @@ export class CatalogComponent implements OnInit {
 
   constructor(
     private cartSvc: CartService,
-    private productSvc: ProductService
+    private productSvc: ProductService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +29,8 @@ export class CatalogComponent implements OnInit {
 
   addTocart(product: IProduct) {
     this.cartSvc.add(product);
+    // how to navigate programtically
+    this.router.navigate(['/cart'])
   }
 
   filterProducts(): IProduct[] {

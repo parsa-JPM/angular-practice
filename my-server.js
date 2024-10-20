@@ -201,26 +201,33 @@ app.get("/api/add/cart", (req, res) => {
   res.json(cart);
 });
 
-// POST endpoint to add products to the cart
+// POST endpoint to replace the cart with an array of products
 app.post("/api/add/cart", (req, res) => {
-  const productItem = req.body; // Get the product item from the request body
+  const productItems = req.body; // Get the array of product items from the request body
 
-  // Validate that productItem contains the necessary fields
-  if (
-    !productItem ||
-    !productItem.id ||
-    !productItem.name ||
-    !productItem.price
-  ) {
-    return res.status(400).json({ error: "Invalid product data" });
+  // Validate that productItems is an array and not empty
+  if (!Array.isArray(productItems) || productItems.length === 0) {
+    return res.status(400).json({ error: "Invalid product data. Expected an array of products." });
   }
 
-  // Add the product item to the cart
-  cart.push(productItem);
+  // Validate each product in the array
+  for (const productItem of productItems) {
+    if (
+      !productItem.id ||
+      !productItem.name ||
+      !productItem.price
+    ) {
+      return res.status(400).json({ error: "Each product must contain id, name, and price." });
+    }
+  }
+
+  // Replace the cart array with the new array of products
+  cart = [...productItems];
 
   // Respond with a success message and the updated cart
-  res.status(201).json({ message: "Product added to the cart", cart });
+  res.status(201).json({ message: "Cart successfully replaced with new products", cart });
 });
+
 
 // Start the server
 app.listen(port, () => {

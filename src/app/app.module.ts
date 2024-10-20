@@ -6,7 +6,9 @@ import { HomeComponent } from './home/home.component';
 import { SiteHeaderComponent } from './site-header/site-header.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { CartComponent } from './cart/cart.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -15,13 +17,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     HomeComponent,
     SiteHeaderComponent,
     CatalogComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
