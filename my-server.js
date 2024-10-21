@@ -229,6 +229,37 @@ app.post("/api/add/cart", (req, res) => {
 });
 
 
+// Mock user data (for the sake of this example)
+const mockUser = {
+  firstName: "John",
+  lastName: "Doe",
+  email: "john.doe@example.com",
+  password: "1234" // In real applications, NEVER store passwords in plain text!
+};
+
+// POST /api/sign-in endpoint
+app.post('/api/sign-in', (req, res) => {
+  const credentials = req.body; // Retrieve the credentials from the request body
+  console.log(credentials);
+
+  // Validate that the necessary fields are present
+  if (!credentials.email || !credentials.password) {
+    return res.status(400).json({ error: "Email and password are required." });
+  }
+
+  // Mock authentication: check if the credentials match the mockUser
+  if (credentials.email === mockUser.email && credentials.password === mockUser.password) {
+    // Remove password before sending the response
+    const { password, ...userWithoutPassword } = mockUser;
+
+    // Respond with the user object (excluding the password)
+    return res.status(200).json(userWithoutPassword);
+  } else {
+    // If the credentials are incorrect, respond with an error
+    return res.status(401).json({ error: "Invalid email or password." });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

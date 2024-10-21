@@ -8,8 +8,11 @@
       <a routerLink="cart" routerLinkActive="active">Cart</a>
     </div>
   </div>
-  <div class="right">
-    <a href="">Sign In</a>
+  <div class="right" *ngIf="!user">
+    <a routerLink="/sign-in">Sign In</a>
     <a href="" class="cta">Register</a>
+  </div>
+  <div *ngIf="user">
+    {{user.firstName}} {{user.lastName}}
   </div>
 </div>

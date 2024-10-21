@@ -8,6 +8,7 @@ import { IUser, IUserCredentials } from './user.model';
   providedIn: 'root',
 })
 export class UserService {
+  // BehaviorSubject likely is used to cache data over application from server
   private user: BehaviorSubject<IUser | null>;
 
   constructor(private http: HttpClient) {
@@ -15,16 +16,18 @@ export class UserService {
   }
 
   getUser(): Observable<IUser | null> {
-    return this.user;
+    return this.user.asObservable();
   }
 
   signIn(credentials: IUserCredentials): Observable<IUser> {
-    return this.http
-      .post<IUser>('/api/sign-in', credentials)
-      .pipe(map((user: IUser) => {
+    //  to push the user data into a  behavior subject (this.user), to update the user's state across the application.
+    // Return the user object back from the map() function so that the caller of signIn() still gets the user as the result of the observable.
+    return this.http.post<IUser>('/api/sign-in', credentials).pipe(
+      map((user: IUser) => {
         this.user.next(user);
         return user;
-      }));
+      })
+    );
   }
 
   signOut() {

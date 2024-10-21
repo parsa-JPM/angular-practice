@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'bot-template-form-controls',
+  selector: 'app-template-form-controls',
   templateUrl: './template-form-controls.component.html',
   styleUrls: ['./template-form-controls.component.css'],
 })
