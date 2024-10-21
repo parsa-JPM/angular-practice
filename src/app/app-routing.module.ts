@@ -17,6 +17,7 @@ const routes: Routes = [
     title: 'Cart - Robot shop',
   },
   {
+    // path: 'catalog/:filter',
     path: 'catalog',
     component: CatalogComponent,
     title: 'catalog - Robot shop',

@@ -1,14 +1,16 @@
 <div class="container">
   <div class="filters">
-    <a class="button" (click)="filter = 'Heads'">Heads</a>
-    <a class="button" (click)="filter = 'Arms'">Arms</a>
-    <a class="button" (click)="filter = 'Torsos'">Torsos</a>
-    <a class="button" (click)="filter = 'Bases'">Bases</a>
-    <a class="button" (click)="filter = ''">All</a>
+    <a class="button" routerLink="/catalog" [queryParams]="{filter: 'heads'}" routerLinkActive="active">Heads</a>
+    <a class="button" routerLink="/catalog" [queryParams]="{filter: 'arms'}" routerLinkActive="active">Arms</a>
+    <a class="button" routerLink="/catalog" [queryParams]="{filter: 'torsos'}" routerLinkActive="active">Torsos</a>
+    <a class="button" routerLink="/catalog" [queryParams]="{filter: 'bases'}" routerLinkActive="active">Bases</a>
+    <!-- routerLinkActiveOptions is used because otherwise /catalog would be active at all (cause it doenst have query param to differntiate)   -->
+    <a class="button" routerLink="/catalog" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">All</a>
   </div>
 
   <ul class="products">
     <!-- ngFor is directive and it repeats everything in the hosting tag -->
+    <!-- every time we changes filter variable this part will be updated -->
     <li class="product-item" *ngFor="let product of filterProducts()">
       <app-product-details [product]="product" (buyEvent)="addTocart(product)" />
     </li>

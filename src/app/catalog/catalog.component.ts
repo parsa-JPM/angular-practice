@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product.model';
 import { ProductService } from './product.service';
 import { CartService } from '../cart/cart.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
@@ -18,13 +18,22 @@ export class CatalogComponent implements OnInit {
   constructor(
     private cartSvc: CartService,
     private productSvc: ProductService,
-    private router: Router
+    // to navigate to other route
+    private router: Router,
+    // to read path params, etc
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.productSvc.getProducts().subscribe((products) => {
       this.products = products;
     });
+    // we subscribe to params cause we are changing filter param in catalog itself
+    // so we want to be notifed when it's changed
+    this.route.queryParams.subscribe((params)=>{
+      // if it's not provided we will assign empty string
+      this.filter = params['filter'] ?? '';
+    })
   }
 
   addTocart(product: IProduct) {
@@ -38,6 +47,6 @@ export class CatalogComponent implements OnInit {
       return this.products;
     }
 
-    return this.products.filter((p) => p.category === this.filter);
+    return this.products.filter((p) => p.category.toLowerCase() === this.filter.toLowerCase());
   }
 }
